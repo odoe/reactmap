@@ -3,6 +3,39 @@
 
 (function() {
 
+  var SearchInput = React.createClass({
+    getInitialState: function() {
+      return {
+        currentValue: ''
+      };
+    },
+
+    updateSearch: function() {
+      this.setState({
+        currentValue: this.refs.search.getDOMNode().value
+      });
+
+      this.props.getSearchLayer().eachFeature(function(layer) {
+        var lowername = layer.feature.properties.NAME.toLowerCase();
+        if (lowername.indexOf(this.state.currentValue) > -1) {
+          console.debug(lowername);
+        }
+      }, this);
+    },
+
+    render: function() {
+      return (
+        <div className='searchContainer'>
+          <input ref='search'
+            type='text'
+            value={this.state.currentValue}
+            onChange={this.updateSearch}/>
+          <ul className='searchResults'></ul>
+        </div>
+      );
+    }
+  });
+
   var ReactMap = React.createClass({
 
     propTypes: {
@@ -13,7 +46,8 @@
 
     getInitialState: function() {
       return {
-        map: {}
+        map: {},
+        layers: []
       };
     },
 
@@ -38,11 +72,18 @@
 
     },
 
+    getSearchLayer: function() {
+      return this.state.layers[0];
+    },
+
     addFeatureLayer: function(options, params) {
       var layer = new L.esri.FeatureLayer(options.url, params);
       if (options.bindPopupMethod) {
         layer.bindPopup(options.bindPopupMethod);
       }
+      this.setState({
+        layers: this.state.layers.concat([layer])
+      });
       return layer;
     },
 
@@ -52,9 +93,10 @@
 
     render: function() {
       return (
-        <div
-          ref='mapDiv'
-          className='mapContainer'/>
+        <div>
+          <div ref='mapDiv' className='mapContainer'></div>
+          <SearchInput getSearchLayer={this.getSearchLayer}/>
+        </div>
       );
     }
 
