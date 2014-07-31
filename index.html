@@ -10,6 +10,7 @@
           html, body {
             width : 100%;
             height : 100%;
+            overflow: hidden;
           }
           .mapContainer {
             position: absolute;
@@ -22,11 +23,11 @@
     </head>
     <body>
         <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-        <script src="https://rawgit.com/Esri/esri-leaflet/master/dist/esri-leaflet-src.js"></script>
+        <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
         <!-- The core React library -->
-        <script src="http://fb.me/react-0.11.0.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.11.0/react-with-addons.js"></script>
         <!-- In-browser JSX transformer, remove when pre-compiling JSX. -->
-        <script src="http://fb.me/JSXTransformer-0.11.0.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.11.0/JSXTransformer.js"></script>
         <script defer src='main.js' type="text/jsx"></script>
     </body>
 </html>
